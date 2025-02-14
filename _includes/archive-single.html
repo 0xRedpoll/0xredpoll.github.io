@@ -1,0 +1,66 @@
+{% if post.header.teaser %}
+  {% capture teaser %}{{ post.header.teaser }}{% endcapture %}
+{% else %}
+  {% assign teaser = site.teaser %}
+{% endif %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
+{% endif %}
+
+<div class="blog-card">
+  <div class="blog-card-banner">
+      <img src="{{ '/assets/images/ldap.png' | relative_url }}" alt="LDAP Ramblings"
+        width="250" class="blog-banner-img">
+  </div>
+  <div class="blog-content-wrapper">
+    {% for category in post.categories %}
+      <button class="blog-topic text-tiny" onclick="location.href='categories/\#{{category | replace: ' ', '-' | downcase}}'">{{category}}</button>
+    {% endfor %}
+    <br/><br/>   
+      <h3>
+        <a href="{{ post.url | relative_url }}"" class="h3">
+          {{ title }}
+        </a>
+      </h3>
+      {% if post.excerpt %}
+      <p class="blog-text">
+        {{ post.excerpt | markdownify | strip_html | truncate: 160 }}  
+      </p>
+      {% endif %}
+      <div class="wrapper-flex">
+
+        <div class="profile-wrapper" style="width:56px;">
+          <img src="{{ '/assets/images/kakashi-author.png' | relative_url }}" alt="0xRedpoll" width="50">
+        </div>
+
+        <div class="wrapper">
+          <a href="#" class="h4">0xRedpoll</a>
+          {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+          <p class="text-sm">
+            {% if post.last_modified_at %}
+            <time datetime="{{ post.last_modified_at | date: "%Y-%m-%d" }}">{{ post.last_modified_at | date: date_format }}</time>
+            {% elsif post.date %}
+            <time datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: date_format }}</time>
+            {% endif %}
+            <span class="separator"></span>
+            <ion-icon name="time-outline"></ion-icon>
+            <time datetime="PT3M">
+            {% assign words_per_minute =  | default: site.words_per_minute | default: 200 %}
+            {% assign words = post.content | strip_html | number_of_words %}
+            {% if words < words_per_minute %}
+            {{ site.data.ui-text[site.locale].less_than | default: "less than" }} 1 {{ site.data.ui-text[site.locale].minute_read | default: "minute read" }}
+            {% elsif words == words_per_minute %}
+              1 {{ site.data.ui-text[site.locale].minute_read | default: "minute read" }}
+            {% else %}
+            {{ words | divided_by: words_per_minute }} {{ site.data.ui-text[site.locale].minute_read | default: "minute read" }}
+            {% endif %}
+              </time>
+          </p>
+        </div>
+
+      </div>
+  </div>
+</div>

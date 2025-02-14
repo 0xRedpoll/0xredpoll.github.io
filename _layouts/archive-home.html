@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+
+{% if page.url != "/" and site.breadcrumbs %}
+  {% unless paginator %}
+    {% include breadcrumbs.html %}
+  {% endunless %}
+{% endif %}
+<div class="hero dark">
+
+    <div class="container">
+
+      <div class="left">
+
+        <h1 class="h1">
+          Hi, I'm <b>0xRedpoll</b>.
+          <br>Red Teamer
+        </h1>
+
+        <p class="h3">
+          Specializing in Purple/Red Teaming and offensive security tool development.
+        </p>
+
+      </div>
+
+      <div class="right">
+
+        <div class="pattern-bg"></div>
+        <div class="img-box">
+          <img src="{{ '/assets/images/kakashi.png' | relative_url }}" alt="0xRedpoll" class="hero-img">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<div id="main" role="main" class="main">
+  <div class="container">
+    {% unless page.header.overlay_color or page.header.overlay_image %}
+      {% endunless %}
+    {{ content }}
+  </div>
+</div>

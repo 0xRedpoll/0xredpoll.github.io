@@ -1,0 +1,92 @@
+---
+layout: archive-home
+---
+
+{{ content }}
+<div class="blog">
+<h2 class="h2">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h2>
+
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
+
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+<div class="blog-card-group">
+  {% include documents-collection.html entries=posts type=entries_layout %}
+</div>
+{% include paginator.html %}
+</div>
+<div class="aside">
+
+
+  <div class="tags">
+
+    <h2 class="h2">Tags</h2>
+{% assign tags = '' | split: '' %}
+{% for tag in site.tags %}
+    {% assign tagName = tag | first %}
+    {% assign tags = tags | push: tagName %}
+{% endfor %}
+
+{% assign tags = tags | sort %}
+    <div class="wrapper">
+      {% for tag in tags %}
+      <button class="hashtag" onclick="location.href='tags/\#{{tag | replace: ' ', '-' | downcase}}'">#{{tag}}</button>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <!-- <div class="contact">
+
+    <h2 class="h2">Let's Talk</h2>
+
+    <div class="wrapper">
+
+      <p>
+        Got any questions about my articles? Want to collab on something? Do not hesitate to reach out and introduce yourself!
+      </p>
+
+      <ul class="social-link">
+
+        <li>
+          <a href="#" class="icon-box discord">
+            <ion-icon name="logo-discord"></ion-icon>
+          </a>
+        </li>
+
+        <li>
+          <a href="" class="icon-box twitter">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div> -->
+
+  <!-- <div class="newsletter">
+
+    <h2 class="h2">Newsletter</h2>
+
+    <div class="wrapper">
+
+      <p>
+        Subscribe to our newsletter to be among the first to keep up with the latest updates.
+      </p>
+
+      <form action="#">
+        <input type="email" name="email" placeholder="Email Address" required>
+
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+
+    </div>
+
+  </div> -->
+
+</div>
